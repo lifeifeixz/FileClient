@@ -22,7 +22,7 @@ public class ImgCompress {
     @SuppressWarnings("deprecation")
     public static void main(String[] args) throws Exception {
         System.out.println("开始：" + new Date().toLocaleString());
-        ImgCompress imgCom = new ImgCompress("D:\\temp\\工作\\材料\\更新说明h5\\15.png");
+        ImgCompress imgCom = new ImgCompress("C:\\Users\\flysLi\\Desktop\\15.png");
         imgCom.resizeFix(800, 800);
         System.out.println("结束：" + new Date().toLocaleString());
     }

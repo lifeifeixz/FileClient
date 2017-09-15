@@ -1,8 +1,10 @@
 package org.file.client.action;
 
 import com.netflix.governator.annotations.binding.Request;
+import com.netflix.governator.annotations.binding.Response;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.file.client.workers.FileExplorer;
 import org.file.client.workers.FileManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -74,5 +76,18 @@ public class FuncAction {
                                  @ApiParam(name = "root", value = "根目录,例:D:") @RequestParam(required = true) String root) {
 
         return FileManager.checkFileUpdate(root, userName, projectName);
+    }
+
+    /**
+     * 获取文件资源
+     *
+     * @param path 硬盘的路径
+     * @return
+     */
+    @ApiOperation("获取文件资源")
+    @RequestMapping("/getFileExplorer")
+    @ResponseBody
+    public FileExplorer getFileExplorer(@ApiParam(name = "path", value = "路径") @RequestParam(required = true) String path) {
+        return new FileExplorer(path);
     }
 }
