@@ -2,7 +2,6 @@ package org.file.client.workers;
 
 import org.file.client.factory.Factorys;
 
-import javax.swing.filechooser.FileSystemView;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

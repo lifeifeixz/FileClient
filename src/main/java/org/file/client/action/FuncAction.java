@@ -8,8 +8,10 @@ import org.file.client.workers.FileExplorer;
 import org.file.client.workers.FileManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.utils.file.FileUtil;
 import org.utils.file.entity.FileEntity;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -89,5 +91,17 @@ public class FuncAction {
     @ResponseBody
     public FileExplorer getFileExplorer(@ApiParam(name = "path", value = "路径") @RequestParam(required = true) String path) {
         return new FileExplorer(path);
+    }
+
+    @ApiOperation("设置常用网页")
+    @RequestMapping("/setCommonWebsite")
+    @ResponseBody
+    public int setCommonWebsite(@ApiParam(name = "快捷键", value = "keyword") @RequestParam(required = true) String keyword,
+                                @ApiParam(name = "网站地址", value = "url") @RequestParam(required = true) String url) {
+        File file = new File("C:\\Users\\flysLi\\Document\\Link", keyword + ".bat");
+        String text = "@echo off\n" +
+                "start " + url;
+        FileUtil.writer(file.getPath(), text);
+        return 1;
     }
 }
