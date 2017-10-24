@@ -1,8 +1,6 @@
 package server;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.Socket;
 import java.net.URLDecoder;
 import java.util.*;
@@ -14,6 +12,7 @@ import java.util.*;
 @SuppressWarnings("all")
 public class HandlerMouse implements Runnable {
     private Socket client;
+
     public HandlerMouse() {
     }
 
@@ -56,6 +55,7 @@ public class HandlerMouse implements Runnable {
                 }
             }
             request.setParams(this.analysisParams(params));
+            this.fileReaderAndReturn("D:\\L临时数据\\coupon-06-27-1.html", client);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -78,5 +78,68 @@ public class HandlerMouse implements Runnable {
             m.put(map[0], map[1]);
         }
         return m;
+    }
+
+    /**
+     * 向浏览器输出文件流
+     *
+     * @param fileName
+     * @param socket
+     * @throws IOException
+     */
+    void fileReaderAndReturn(String fileName, Socket socket) throws IOException {
+        if ("/".equals(fileName)) {// 设置欢迎页面，呵呵！
+            fileName = "/index.html";
+        }
+        fileName = fileName.substring(1);
+        PrintStream out = new PrintStream(socket.getOutputStream(), true);
+        File fileToSend = new File(fileName);
+
+        String fileEx = fileName.substring(fileName.indexOf(".") + 1);
+        String contentType = null;
+        // 设置返回的内容类型
+        // 此处的类型与tomcat/conf/web.xml中配置的mime-mapping类型是一致的。测试之用，就写这么几个。
+        if ("htmlhtmxml".indexOf(fileEx) > -1) {
+            contentType = "text/html;charset=utf8";
+        } else if ("jpegjpggifbpmpng".indexOf(fileEx) > -1) {
+            contentType = "application/binary";
+        }
+
+        if (fileToSend.exists() && !fileToSend.isDirectory()) {
+            // http 协议返回头
+            out.println("HTTP/1.0 200 OK");// 返回应答消息,并结束应答
+            out.println("Content-Type:" + contentType);
+            out.println("Content-Length:" + fileToSend.length());// 返回内容字节数
+            out.println();// 根据 HTTP 协议, 空行将结束头信息
+
+            FileInputStream fis = null;
+            try {
+                fis = new FileInputStream(fileToSend);
+            } catch (FileNotFoundException e) {
+                out.println("<h1>404错误！</h1>" + e.getMessage());
+            }
+            byte data[];
+            try {
+                data = new byte[fis.available()];
+                fis.read(data);
+                out.write(data);
+            } catch (IOException e) {
+                out.println("<h1>500错误!</h1>" + e.getMessage());
+                e.printStackTrace();
+            } finally {
+                out.close();
+                try {
+                    fis.close();
+                } catch (IOException e) {
+
+                    e.printStackTrace();
+                }
+            }
+        } else {
+            out.println("<h1>404错误！</h1>" + "文件没有找到");
+            out.close();
+
+        }
+
     }
 }
