@@ -1,4 +1,4 @@
-package crawler.jasiel.filterstrategy;
+package crawler.jasiel.strategy;
 
 import org.jsoup.nodes.Element;
 

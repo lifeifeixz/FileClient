@@ -1,12 +1,16 @@
 package org.file.client.action;
 
-import com.netflix.governator.annotations.binding.Request;
-import com.netflix.governator.annotations.binding.Response;
+import crawler.jasiel.JasieLusion;
+import crawler.jasiel.strategy.StorageRedis;
+import crawler.jasiel.util.RemoteReadUtils;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.file.client.workers.FileExplorer;
 import org.file.client.workers.FileManager;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.web.bind.annotation.*;
 import org.utils.file.FileUtil;
 import org.utils.file.entity.FileEntity;
@@ -103,5 +107,35 @@ public class FuncAction {
                 "start " + url;
         FileUtil.writer(file.getPath(), text);
         return 1;
+    }
+
+    /**
+     * 数据抓取
+     *
+     * @return
+     * @throws Exception
+     */
+    @ApiOperation("数据抓取")
+    @RequestMapping("/crawler")
+    @ResponseBody
+    public String crawler(@ApiParam(name = "url", value = "一个网页地址") @RequestParam(required = false) String url) throws Exception {
+        if (url == null || "".equals(url)) {
+            url = "https://www.msn.cn/zh-cn";
+        }
+        Document document = Jsoup.parse(RemoteReadUtils.reader(url));
+        Elements links = document.getElementsByTag("a");
+        for (Element link : links) {
+            String uri = link.attr("abs:href");
+            if (uri == null || uri.indexOf("http") == -1) {
+                continue;
+            }
+            new Thread(() -> {
+                JasieLusion jasieLusion = new JasieLusion(uri);
+                jasieLusion.setStorageStrategy(new StorageRedis());
+                jasieLusion.start();
+            }).start();
+        }
+        System.out.println("共创建" + links.size() + "个线程");
+        return links.size() + "threads are expected to be created";
     }
 }
