@@ -1,7 +1,7 @@
 package crawler.jasiel;
 
-import crawler.RedisConfig;
 import crawler.jasiel.strategy.StorageRedis;
+import crawler.jasiel.strategy.StroragePrint;
 
 /**
  * @author flysLi
@@ -10,21 +10,18 @@ import crawler.jasiel.strategy.StorageRedis;
 public class ApplicationImpl extends ApplicationTemplate {
     @Override
     protected void init() {
-//        RedisConfig redisConfig = new RedisConfig();
-//        redisConfig.setHost("localhost");
-//        redisConfig.setPort(6379);
         this.urls = new String[1];
         System.out.println("初始化,暂时没有事情可做......");
     }
 
     @Override
     protected void initResource() {
-        this.urls[0] = "http://shanghai.bitauto.com/";
+        this.urls[0] = "https://y.qq.com/";
     }
 
     @Override
     protected boolean initStorageStrategy() {
-        this.storageStrategy = new StorageRedis();
+        this.storageStrategy = new StroragePrint();
         return true;
     }
 }

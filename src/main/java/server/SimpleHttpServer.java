@@ -50,8 +50,10 @@ public class SimpleHttpServer implements Runnable {
         } catch (Exception e) {
             System.out.println("无法启动HTTP服务器:" + e.getMessage());
         }
-        if (serverSocket == null)
+        if (serverSocket == null) {
             System.exit(1);// 无法开始服务器
+        }
+
 
         new Thread(this).start();
         System.out.println("HTTP服务器正在运行,端口:" + PORT);
@@ -90,8 +92,10 @@ public class SimpleHttpServer implements Runnable {
                         while ((line = in.readLine()) != null) {
                             System.out.println(line);
 
-                            if (line.equals(""))
+                            if (line.equals("")) {
                                 break;
+                            }
+
                         }
 
                         System.out.println("http协议头部结束 ***************");

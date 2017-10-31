@@ -1,8 +1,7 @@
 package crawler.jasiel;
 
-import crawler.jasiel.strategy.StorageRedis;
+import crawler.jasiel.strategy.AnalysisStrategy;
 import crawler.jasiel.strategy.StorageStrategy;
-import crawler.jasiel.strategy.StroragePrint;
 
 /**
  * Created by flysLi on 2017/10/31.
@@ -12,6 +11,8 @@ public abstract class ApplicationTemplate {
     protected String[] urls;
 
     protected StorageStrategy storageStrategy;
+
+    protected AnalysisStrategy analysisStrategy;
 
     protected abstract void init();
 

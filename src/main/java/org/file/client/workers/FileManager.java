@@ -160,7 +160,9 @@ public class FileManager {
     }
 
     public static FileEntity contains(List<FileEntity> fileEntities, String s) {
-        if (fileEntities == null || fileEntities.size() == 0) return null;
+        if (fileEntities == null || fileEntities.size() == 0) {
+            return null;
+        }
 
         for (FileEntity f : fileEntities) {
             if (f.getPath().equals(s)) {

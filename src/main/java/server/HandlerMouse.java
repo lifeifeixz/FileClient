@@ -35,8 +35,9 @@ public class HandlerMouse implements Runnable {
             request.setMethod(method);
             // 读取浏览器发送过来的请求参数头部信息
             while ((line = in.readLine()) != null) {
-                if (line.equals(""))
+                if (line.equals("")) {
                     break;
+                }
             }
             request.setResource(resource);
             String params = null;
