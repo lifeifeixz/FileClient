@@ -36,16 +36,15 @@ public class StorageRedis implements StorageStrategy {
                 String title = elements.get(0).text();
                 Jedis jedis = new Jedis("localhost", 6380);
                 jedis.hdel(title, uri);
-                jedis.flushDB();
-                jedis.close();
             }
         }
     }
 
     @Override
     public void save(String title, String uri) {
-        Jedis jedis = new Jedis("106.14.26.20", 6379);
+        Jedis jedis = new Jedis("localhost", 6379);
         jedis.set(title, uri);
+
     }
 
     public static void main(String[] args) {

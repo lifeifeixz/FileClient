@@ -38,11 +38,9 @@ public class CrawlerAuther {
      * @return
      */
     public void analysisElements(Elements elements) {
-        System.out.println();
         // 排除未访问和已访问中的该记录
         for (Element element : elements) {
             String href = element.attr("abs:href");
-            System.out.println("[线程:" + Thread.currentThread().getId() + "]" + href);
             resourcesContainer.addLink(href);
             //存储
             storageStrategy.save(element.text(), href);

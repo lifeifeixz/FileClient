@@ -12,13 +12,7 @@ import java.util.Set;
  * @date 2017/10/26
  */
 public final class ResourcesContainer implements Container {
-    /**
-     * 未访问队列
-     **/
     private Queue<String> links = new LinkedList<>();
-    /**
-     * 已访问集合
-     **/
     private Set<String> visibles = new HashSet<>();
 
     private ResourcesContainer() {
@@ -39,7 +33,8 @@ public final class ResourcesContainer implements Container {
 
     @Override
     public synchronized boolean addLink(String l) {
-        if (!this.links.contains(l) && !this.visibles.contains(l)) {//如果没有收集过,也没有访问过就加入
+        //如果没有收集过,也没有访问过就加入
+        if (!this.links.contains(l) && !this.visibles.contains(l)) {
             return getInstance().links.offer(l);
         }
         return false;

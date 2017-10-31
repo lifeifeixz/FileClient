@@ -8,24 +8,15 @@ import org.jsoup.nodes.Document;
  * @author flysLi
  * @date 2017/10/23
  */
+@SuppressWarnings("all")
 public class JasieLusion {
-    /**
-     * 输出策略
-     */
     private StorageStrategy storageStrategy;
 
     public void setStorageStrategy(StorageStrategy storageStrategy) {
         this.storageStrategy = storageStrategy;
     }
 
-    /**
-     * 仓库
-     **/
     private ResourcesContainer resourcesContainer = ResourcesContainer.getInstance();
-
-    /**
-     * 过滤策略
-     **/
     private StrategyFilter filter;
 
     public JasieLusion(String uri) {

@@ -7,12 +7,14 @@ import org.jsoup.nodes.Document;
  * 打印策略
  */
 public class StroragePrint implements StorageStrategy {
-    public void save(Document document) {
+    @Override
+    public boolean save(Document document) {
         System.out.println(document.getElementsByTag("title").get(0).text());
+        return false;
     }
 
     @Override
     public void save(String title, String uri) {
-
+        System.out.println(title + "----------" + uri);
     }
 }
