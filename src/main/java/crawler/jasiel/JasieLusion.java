@@ -37,7 +37,7 @@ public class JasieLusion {
         Document document = null;
         try {
             document = RemoteReadUtils.get(link);
-            new CrawlerAuther(storageStrategy).ahalysis(document);
+            new CrawlerAuther().ahalysis(document);
         } catch (Exception e) {
             System.out.println(link + "[抓取不到]" + e.getMessage());
         }

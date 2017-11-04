@@ -1,7 +1,6 @@
 package crawler.jasiel;
 
-import crawler.jasiel.strategy.AnalysisStrategy;
-import crawler.jasiel.strategy.StorageStrategy;
+import crawler.jasiel.strategy.*;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -12,19 +11,19 @@ import org.jsoup.select.Elements;
  */
 @SuppressWarnings("all")
 public class CrawlerAuther implements AnalysisStrategy {
-    private StorageStrategy storageStrategy;
+    private StorageStrategy storageStrategy = new StroragePrint();
     private ResourcesContainer resourcesContainer = ResourcesContainer.getInstance();
-
-    public CrawlerAuther(StorageStrategy storageStrategy) {
-        this.storageStrategy = storageStrategy;
-    }
+    private CollectionStrategy collectionStrategy = new CollectionDefault();
 
     @Override
     public Elements ahalysis(Document document) {
         Elements elements = document.getElementsByTag("a");
         for (Element element : elements) {
             String href = element.attr("abs:href");
-            resourcesContainer.addLink(href);
+            //收集策略
+            if (collectionStrategy.filter(href)) {
+                resourcesContainer.addLink(href);
+            }
             //输出
             storageStrategy.save(element.text(), href);
         }

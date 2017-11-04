@@ -16,7 +16,7 @@ public class ApplicationImpl extends ApplicationTemplate {
 
     @Override
     protected void initResource() {
-        this.urls[0] = "https://y.qq.com/";
+        this.urls[0] = "http://aqdyba.com/zhanzheng/";
     }
 
     @Override
