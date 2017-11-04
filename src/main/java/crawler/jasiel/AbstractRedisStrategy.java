@@ -1,5 +1,6 @@
-package crawler.jasiel.strategy;
+package crawler.jasiel;
 
+import crawler.jasiel.strategy.StorageStrategy;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import redis.clients.jedis.Jedis;

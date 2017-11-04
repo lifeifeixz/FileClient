@@ -1,21 +1,23 @@
 package crawler.jasiel;
 
 /**
- * Created by flysLi on 2017/10/27.
+ * @author flysLi
+ * @date 2017/10/27
  */
-public class AbstractDefaultResourcesContainer implements Container{
+@SuppressWarnings("All")
+public class AbstractDefaultResourcesContainer implements Container {
     @Override
-    public boolean addLink(String l) {
+    public synchronized boolean addLink(String l) {
         return false;
     }
 
     @Override
-    public boolean addVisible(String l) {
+    public synchronized boolean addVisible(String l) {
         return false;
     }
 
     @Override
-    public boolean isNext() {
+    public synchronized boolean isNext() {
         return false;
     }
 

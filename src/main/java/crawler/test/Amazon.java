@@ -1,4 +1,4 @@
-package crawler.jasiel.test;
+package crawler.test;
 
 import crawler.jasiel.util.RemoteReadUtils;
 

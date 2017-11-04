@@ -16,4 +16,11 @@ public interface AnalysisStrategy {
      * @return
      */
     Elements ahalysis(Document document);
+
+    /**
+     * 赋值输出策略
+     *
+     * @param storageStrategy
+     */
+    void setStorageStrategy(StorageStrategy storageStrategy);
 }

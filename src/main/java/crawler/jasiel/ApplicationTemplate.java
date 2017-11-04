@@ -9,9 +9,7 @@ import crawler.jasiel.strategy.StorageStrategy;
 @SuppressWarnings("all")
 public abstract class ApplicationTemplate {
     protected String[] urls;
-
     protected StorageStrategy storageStrategy;
-
     protected AnalysisStrategy analysisStrategy;
 
     protected abstract void init();
@@ -26,8 +24,7 @@ public abstract class ApplicationTemplate {
     private int start() {
         for (String uri : urls) {
             new Thread(() -> {
-                JasieLusion jasieLusion = new JasieLusion(uri);
-                jasieLusion.setStorageStrategy(storageStrategy);
+                JasieLusion jasieLusion = new JasieLusion();
                 jasieLusion.start();
             }).start();
         }

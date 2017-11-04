@@ -1,12 +1,14 @@
-package crawler.jasiel.strategy;
+package crawler.jasiel;
 
+import crawler.jasiel.strategy.StorageStrategy;
 import org.jsoup.nodes.Document;
 
 /**
- * Created by flysLi on 2017/10/27.
+ * @author flysLi
+ * @date 2017/10/27
  * 打印策略
  */
-public class StroragePrint implements StorageStrategy {
+public class AbstractDefaultStrorage implements StorageStrategy {
     @Override
     public boolean save(Document document) {
         System.out.println(document.getElementsByTag("title").get(0).text());

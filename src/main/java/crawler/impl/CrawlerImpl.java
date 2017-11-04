@@ -1,6 +1,6 @@
 package crawler.impl;
 
-import crawler.AbstractCrawler;
+import crawler.test.AbstractCrawler;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 

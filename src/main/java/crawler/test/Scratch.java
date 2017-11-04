@@ -1,4 +1,4 @@
-package crawler;
+package crawler.test;
 
 /**
  * Created by flysLi on 2017/9/25.

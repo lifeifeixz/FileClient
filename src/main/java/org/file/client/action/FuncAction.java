@@ -1,7 +1,6 @@
 package org.file.client.action;
 
 import crawler.jasiel.JasieLusion;
-import crawler.jasiel.strategy.StorageRedis;
 import crawler.jasiel.util.RemoteReadUtils;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -130,8 +129,7 @@ public class FuncAction {
                 continue;
             }
             new Thread(() -> {
-                JasieLusion jasieLusion = new JasieLusion(uri);
-                jasieLusion.setStorageStrategy(new StorageRedis());
+                JasieLusion jasieLusion = new JasieLusion();
                 jasieLusion.start();
             }).start();
         }

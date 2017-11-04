@@ -1,7 +1,8 @@
-package crawler.jasiel.strategy;
+package crawler.jasiel;
 
 import java.util.Map;
 
+import crawler.jasiel.AbstractRedisStrategy;
 import org.jsoup.nodes.Document;
 
 /**

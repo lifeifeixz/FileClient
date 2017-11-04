@@ -1,6 +1,26 @@
 package crawler.jasiel;
 
-import crawler.jasiel.strategy.*;
+/*
+ * 前言:设计之初，JasieLusion 是一条杂乱无章但应有一条固定可循环的生产线、
+ * 它负责的做的事情不是很多，是所有。
+ * 在使用之后的第二天，我感觉到我有很多的想法想要通过这条生产线实现，
+ * 说这句话的意思就是:我需要在这条生产线上加很多的功能。
+ * 还没开始写，我就意识到这是一个让人头疼的工程。
+ *
+ * 现在:在经过半个月的修改之后,我们决定只让它做一件永远重复的事情:
+ * 1、从仓库 ResourcesContainer 中去除一条资源路径
+ * 2、分析出该资源路径的Document数据
+ * 3、交给资源解析器 AnalysisStrategy
+ * 4、从 ResourcesContainer 中再取出一条资源路径,来重复以上步骤
+ *
+ *
+ * 作者:fly·Li
+ * 目的:在internet中收集数据,更多的是数据对应的地址
+ * 时间:2017年11月4日
+ *
+ */
+
+import crawler.jasiel.strategy.AnalysisStrategy;
 import crawler.jasiel.util.RemoteReadUtils;
 import org.jsoup.nodes.Document;
 
@@ -10,23 +30,8 @@ import org.jsoup.nodes.Document;
  */
 @SuppressWarnings("all")
 public class JasieLusion {
-    private StorageStrategy storageStrategy;
     private ResourcesContainer resourcesContainer = ResourcesContainer.getInstance();
-    private StrategyFilter strategyFilter;
-    private AnalysisStrategy analysisStrategy;
-
-    public void setStorageStrategy(StorageStrategy storageStrategy) {
-        this.storageStrategy = storageStrategy;
-    }
-
-    public void setAnalysisStrategy(AnalysisStrategy analysisStrategy) {
-        this.analysisStrategy = analysisStrategy;
-    }
-
-    public JasieLusion(String uri) {
-        //实例化构造条件
-        resourcesContainer.addLink(uri);
-    }
+    private AnalysisStrategy analysisStrategy = new AnalysisDefaultHandler();
 
     public void start() {
         crawler();
@@ -37,7 +42,7 @@ public class JasieLusion {
         Document document = null;
         try {
             document = RemoteReadUtils.get(link);
-            new CrawlerAuther().ahalysis(document);
+            analysisStrategy.ahalysis(document);
         } catch (Exception e) {
             System.out.println(link + "[抓取不到]" + e.getMessage());
         }

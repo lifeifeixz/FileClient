@@ -1,6 +1,6 @@
 package crawler.impl;
 
-import crawler.Scratch;
+import crawler.test.Scratch;
 
 import java.io.InputStream;
 import java.net.URL;

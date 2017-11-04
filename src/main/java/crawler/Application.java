@@ -2,6 +2,7 @@ package crawler;
 
 import crawler.jasiel.ApplicationImpl;
 import crawler.jasiel.ApplicationTemplate;
+import crawler.jasiel.ResourcesContainer;
 
 /**
  * Created by flysLi on 2017/10/23.
@@ -10,6 +11,8 @@ import crawler.jasiel.ApplicationTemplate;
 public class Application {
     public static void main(String[] args) throws Exception {
         ApplicationTemplate applicationTemplate = new ApplicationImpl();
+        //在仓库中添加一条数据
+        ResourcesContainer.getInstance().addLink("http://www.sina.com.cn/");
         applicationTemplate.run();
     }
 }

@@ -1,8 +1,5 @@
 package crawler.jasiel;
 
-import crawler.jasiel.strategy.StorageRedis;
-import crawler.jasiel.strategy.StroragePrint;
-
 /**
  * @author flysLi
  * @date 2017/10/31
@@ -16,12 +13,12 @@ public class ApplicationImpl extends ApplicationTemplate {
 
     @Override
     protected void initResource() {
-        this.urls[0] = "http://aqdyba.com/zhanzheng/";
+        this.urls[0] = "";
     }
 
     @Override
     protected boolean initStorageStrategy() {
-        this.storageStrategy = new StroragePrint();
+        this.storageStrategy = new AbstractDefaultStrorage();
         return true;
     }
 }
