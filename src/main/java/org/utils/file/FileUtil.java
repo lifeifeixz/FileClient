@@ -1,6 +1,5 @@
 package org.utils.file;
 
-import com.alibaba.fastjson.JSONArray;
 
 import java.io.*;
 import java.math.BigInteger;
@@ -148,6 +147,16 @@ public class FileUtil {
             }
         }
         return sb.toString();
+    }
+
+    /**
+     * 读取文件
+     *
+     * @param filePath
+     * @return
+     */
+    public static String readerString(String filePath) {
+        return readerString(filePath);
     }
 
     /**
