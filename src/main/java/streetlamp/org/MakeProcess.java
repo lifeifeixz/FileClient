@@ -7,6 +7,8 @@ import streetlamp.org.entity.ProductDetails;
 import java.io.File;
 
 /**
+ * 生产线
+ *
  * @author flysLi
  * @date 2017/12/6
  */

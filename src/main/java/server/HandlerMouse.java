@@ -1,9 +1,10 @@
 package server;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
-import java.net.URLDecoder;
-import java.util.*;
 
 /**
  * Created by flysLi on 2017/9/25.
@@ -11,136 +12,80 @@ import java.util.*;
  */
 @SuppressWarnings("all")
 public class HandlerMouse implements Runnable {
-    private Socket client;
+    private Socket socket;
 
     public HandlerMouse() {
+
     }
 
     public HandlerMouse(Socket socket) {
-        this.client = client;
+        this.socket = socket;
     }
 
+    @Override
     public void run() {
+        BufferedReader reader = null;
         try {
-            RequestMouse request = new RequestMouse();
-            // 第一阶段: 打开输入流
-            BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            // 读取第一行, 请求地址
-            String line = in.readLine();
-            String resource = line.substring(line.indexOf('/'), line.lastIndexOf('/') - 5);
-            // 获得请求的资源的地址
-            resource = URLDecoder.decode(resource, "UTF-8");// 反编码
-            // 获取请求方法, GET 或者 POST
-            String method = new StringTokenizer(line).nextElement().toString();
-            request.setMethod(method);
-            // 读取浏览器发送过来的请求参数头部信息
-            while ((line = in.readLine()) != null) {
-                if (line.equals("")) {
-                    break;
-                }
-            }
-            request.setResource(resource);
-            String params = null;
-            if (resource.indexOf("?") > -1) {
-                params = resource
-                        .substring(resource.indexOf("?") + 1);
-                resource = resource.substring(0, resource
-                        .indexOf("?"));
-            }
-            // 显示 POST 表单提交的内容, 这个内容位于请求的主体部分
-            if ("POST".equalsIgnoreCase(method)) {
-                if (params != null) {
-                    params += "&" + in.readLine();
-                } else {
-                    params = in.readLine();
-                }
-            }
-            request.setParams(this.analysisParams(params));
-            this.fileReaderAndReturn("D:\\L临时数据\\coupon-06-27-1.html", client);
+            reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+        String requestHeader;
+        int contentLength = 0;
+        try {
+            while ((requestHeader = reader.readLine()) != null && !requestHeader.isEmpty()) {
+                /**
+                 * 获得GET参数
+                 */
+                if (requestHeader.startsWith(Http.Method.GET)) {
+                    int begin = requestHeader.indexOf("/?") + 2;
+                    int end = requestHeader.indexOf("HTTP/");
+                    String condition = requestHeader.substring(begin, end);
+                }
 
-    /**
-     * 解析请求中的参数
-     *
-     * @param params
-     * @throws IOException
-     */
-    Map<String, Object> analysisParams(String params) throws IOException {
-        if (params == null) {
-            return null;
-        }
-        Map<String, Object> m = new HashMap<String, Object>();
-        String[] maps = params.split("&");
-        for (String temp : maps) {
-            String[] map = temp.split("=");
-            m.put(map[0], map[1]);
-        }
-        return m;
-    }
-
-    /**
-     * 向浏览器输出文件流
-     *
-     * @param fileName
-     * @param socket
-     * @throws IOException
-     */
-    void fileReaderAndReturn(String fileName, Socket socket) throws IOException {
-        if ("/".equals(fileName)) {// 设置欢迎页面，呵呵！
-            fileName = "/index.html";
-        }
-        fileName = fileName.substring(1);
-        PrintStream out = new PrintStream(socket.getOutputStream(), true);
-        File fileToSend = new File(fileName);
-
-        String fileEx = fileName.substring(fileName.indexOf(".") + 1);
-        String contentType = null;
-        // 设置返回的内容类型
-        // 此处的类型与tomcat/conf/web.xml中配置的mime-mapping类型是一致的。测试之用，就写这么几个。
-        if ("htmlhtmxml".indexOf(fileEx) > -1) {
-            contentType = "text/html;charset=utf8";
-        } else if ("jpegjpggifbpmpng".indexOf(fileEx) > -1) {
-            contentType = "application/binary";
-        }
-
-        if (fileToSend.exists() && !fileToSend.isDirectory()) {
-            // http 协议返回头
-            out.println("HTTP/1.0 200 OK");// 返回应答消息,并结束应答
-            out.println("Content-Type:" + contentType);
-            out.println("Content-Length:" + fileToSend.length());// 返回内容字节数
-            out.println();// 根据 HTTP 协议, 空行将结束头信息
-
-            FileInputStream fis = null;
-            try {
-                fis = new FileInputStream(fileToSend);
-            } catch (FileNotFoundException e) {
-                out.println("<h1>404错误！</h1>" + e.getMessage());
+                /**
+                 * 获得POST参数
+                 * 1.获取请求内容长度
+                 */
+                if (requestHeader.startsWith("Content-Length")) {
+                    int begin = requestHeader.indexOf("Content-Lengh:") + "Content-Length:".length();
+                    String postParamterLength = requestHeader.substring(begin).trim();
+                    contentLength = Integer.parseInt(postParamterLength);
+                }
             }
-            byte data[];
-            try {
-                data = new byte[fis.available()];
-                fis.read(data);
-                out.write(data);
-            } catch (IOException e) {
-                out.println("<h1>500错误!</h1>" + e.getMessage());
-                e.printStackTrace();
-            } finally {
-                out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        /**
+         * 发送回执
+         */
+        StringBuffer sb = new StringBuffer();
+        if (contentLength > 0) {
+            for (int i = 0; i < contentLength; i++) {
                 try {
-                    fis.close();
+                    sb.append((char) reader.read());
                 } catch (IOException e) {
-
                     e.printStackTrace();
                 }
             }
-        } else {
-            out.println("<h1>404错误！</h1>" + "文件没有找到");
-            out.close();
-
         }
-
+        //发送回执
+        PrintWriter pw = null;
+        try {
+            pw = new PrintWriter(socket.getOutputStream());
+            pw.println("HTTP/1.1 200 OK");
+            pw.println("Content-type:text/html");
+            pw.println();
+            pw.println("<h1>yes success!</h1>");
+            pw.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
