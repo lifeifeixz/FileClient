@@ -12,7 +12,7 @@ public class Application {
     public static void main(String[] args) throws Exception {
         ApplicationTemplate applicationTemplate = new ApplicationImpl();
         //在仓库中添加一条数据
-        ResourcesContainer.getInstance().addLink("http://aqdyba.com/lusi/ABP601bennengbaochubenfanyuantianmeiyingqibing/");
+        ResourcesContainer.getInstance().addLink("https://www.hupu.com");
         applicationTemplate.run();
     }
 }
