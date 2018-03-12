@@ -8,7 +8,7 @@ package crawler.jasiel;
  * 还没开始写，我就意识到这是一个让人头疼的工程。
  *
  * 现在:在经过半个月的修改之后,我们决定只让它做一件永远重复的事情:
- * 1、从仓库 ResourcesContainer 中去除一条资源路径
+ * 1、从仓库 ResourcesContainer 中取出一条资源路径
  * 2、分析出该资源路径的Document数据
  * 3、交给资源解析器 AnalysisStrategy
  * 4、从 ResourcesContainer 中再取出一条资源路径,来重复以上步骤
@@ -21,7 +21,7 @@ package crawler.jasiel;
  */
 
 import crawler.jasiel.strategy.AnalysisStrategy;
-import crawler.jasiel.util.RemoteReadUtils;
+import jars.ResourceTransportationUtil;
 import org.jsoup.nodes.Document;
 
 /**
@@ -41,7 +41,7 @@ public class JasieLusion {
         String link = resourcesContainer.next();
         Document document = null;
         try {
-            document = RemoteReadUtils.get(link);
+            document = ResourceTransportationUtil.get(link);
             analysisStrategy.ahalysis(document);
         } catch (Exception e) {
             System.out.println(link + "[抓取不到]" + e.getMessage());

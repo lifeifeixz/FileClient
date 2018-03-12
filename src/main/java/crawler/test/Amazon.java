@@ -1,6 +1,6 @@
 package crawler.test;
 
-import crawler.jasiel.util.RemoteReadUtils;
+import jars.ResourceTransportationUtil;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -14,12 +14,12 @@ import java.util.Random;
  */
 public class Amazon {
     public static void main(String[] args) throws Exception {
-        Document dom = Jsoup.parse(RemoteReadUtils.read("D:\\L临时数据\\HTML\\amazonIndex.txt"));
+        Document dom = Jsoup.parse(ResourceTransportationUtil.reader("D:\\L临时数据\\HTML\\amazonIndex.txt"));
         Elements links = dom.getElementsByTag("link");
         for (Element link : links) {
             String href = link.attr("href");
             if (href.indexOf("http") > -1) {
-                RemoteReadUtils.writer(RemoteReadUtils.reader(href), "D:\\L临时数据\\HTML\\" + new Random().nextInt() + ".css");
+                ResourceTransportationUtil.writer(ResourceTransportationUtil.readLocalResource(href), "D:\\L临时数据\\HTML\\" + new Random().nextInt() + ".css");
                 System.out.println("done");
             }
         }

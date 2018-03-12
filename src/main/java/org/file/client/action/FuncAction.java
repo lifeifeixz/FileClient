@@ -1,7 +1,7 @@
 package org.file.client.action;
 
 import crawler.jasiel.JasieLusion;
-import crawler.jasiel.util.RemoteReadUtils;
+import jars.ResourceTransportationUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.file.client.workers.FileExplorer;
@@ -121,7 +121,7 @@ public class FuncAction {
         if (url == null || "".equals(url)) {
             url = "https://www.msn.cn/zh-cn";
         }
-        Document document = Jsoup.parse(RemoteReadUtils.reader(url));
+        Document document = Jsoup.parse(ResourceTransportationUtil.readLocalResource(url));
         Elements links = document.getElementsByTag("a");
         for (Element link : links) {
             String uri = link.attr("abs:href");
