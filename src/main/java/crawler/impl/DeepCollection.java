@@ -7,7 +7,9 @@ import java.net.URL;
 import java.net.URLConnection;
 
 /**
- * Created by flysLi on 2017/9/25.
+ *
+ * @author flysLi
+ * @date 2017/9/25
  * 深度收集资源
  */
 @SuppressWarnings("All")
