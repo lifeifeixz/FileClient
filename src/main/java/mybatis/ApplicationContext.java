@@ -19,6 +19,7 @@ import java.util.jar.JarFile;
  * @author flysLi
  * @date 2018/2/24
  */
+@SuppressWarnings("All")
 public class ApplicationContext {
 
     public Set<Class<?>> classes = new LinkedHashSet();
@@ -42,7 +43,7 @@ public class ApplicationContext {
                 for (Field f : fields) {
                     f.setAccessible(true);
                     /*获取该属性对应的实例*/
-                    f.set(cls, this.getBean(f.getType().getClass()));
+                    f.set(cls, this.getBean(f.getType()));
                 }
             }
         }
@@ -60,7 +61,6 @@ public class ApplicationContext {
         if (t.isInterface()) {
             return (T) MethodProxyFactory.newInstance(t);
         }
-
         //循环所有的class
         for (Class<?> c : this.classes) {
             if (c.isInstance(t)) {

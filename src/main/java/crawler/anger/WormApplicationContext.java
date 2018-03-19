@@ -25,26 +25,31 @@ import java.util.jar.JarFile;
 public class WormApplicationContext {
 
     private Map<String, Object> objects = new HashMap<String, Object>(10);
-    private Set<String> keys = new HashSet<>(10);
 
-    public WormApplicationContext(String packing) throws IllegalAccessException, InstantiationException {
-        //2018/3/19 扫描包下所有的类，装入容器
+    public WormApplicationContext(String packing) {
+        /*2018/3/19 扫描包下所有的类，装入容器*/
         Set<Class<?>> classList = this.getClasses(packing);
-        // 将所有的非接口类型实例化
+        /*将所有的非接口类型实例化*/
         for (Class<?> cls : classList) {
-            // 2018/3/19 权宜之计
+            //TODO 2018/3/19 权宜之计：出现莫名其妙的问题，貌似只有这样能解决;
             if (cls.getName().indexOf("WormApplicatio") > -1) {
                 continue;
             }
             if (!cls.isInterface()) {
                 Map<String, Object> map = new HashMap<>(10);
-                this.objects.put(cls.getName(), cls.newInstance());
+                try {
+                    this.objects.put(cls.getName(), cls.newInstance());
+                } catch (InstantiationException e) {
+                    System.err.println("不能实例化" + cls.getName() + "类");
+                    System.err.println(e.getMessage());
+                } catch (IllegalAccessException e) {
+                    System.err.println("反射时调用了private方法所导致的该错误" + cls.getName());
+                    System.err.println(e.getMessage());
+                }
             }
         }
-        keys = objects.keySet();
-        // 2018/3/19 将部分组件的属性进行注入
-        Set<String> keys = objects.keySet();
-        for (String key : keys) {
+        /*将部分组件的属性进行注入*/
+        for (String key : objects.keySet()) {
             Object object = objects.get(key);
             /*可被注入类*/
             if (object instanceof WormDepth) {
@@ -56,17 +61,22 @@ public class WormApplicationContext {
         }
     }
 
-    public void ioc(Object object) {
+    /**
+     * 将对象注入到某些属性中
+     *
+     * @param object
+     */
+    private void ioc(Object object) {
         Field[] fields = object.getClass().getDeclaredFields();
         for (Field field : fields) {
             if (field.getAnnotation(AutoWired.class) != null) {
                 field.setAccessible(true);
                 try {
-                    if (this.getCustomClass(field.getType()) == null) {
-                        field.set(object, this.getDefaultImpl(field.getType()));
+                    if (this.getCustomInstance(field.getType()) == null) {
+                        field.set(object, this.getDefaultObject(field.getType()));
                         this.log(object + "中的属性" + field.getType().getName() + "已经注入了自定义的实现");
                     } else {
-                        field.set(object, this.getCustomClass(field.getType()));
+                        field.set(object, this.getCustomInstance(field.getType()));
                         this.log(object + "中的属性" + field.getType().getName() + "已经注入了默认的实现");
                     }
                 } catch (Exception e) {
@@ -84,7 +94,7 @@ public class WormApplicationContext {
      * @return
      */
     public <T> T getBean(Class<T> t) {
-        for (String key : keys) {
+        for (String key : objects.keySet()) {
             Object object = objects.get(key);
             if (object.getClass().getName().equals(t.getTypeName())) {
                 return (T) object;
@@ -103,10 +113,10 @@ public class WormApplicationContext {
      * @param cls 接口类型
      * @return
      */
-    public Object getCustomClass(Class<?> cls) {
-        Set<String> keys = objects.keySet();
-        for (String key : keys) {
-            Class<?>[] interfaces = objects.get(key).getClass().getInterfaces();
+    private Object getCustomInstance(Class<?> cls) {
+        for (String key : objects.keySet()) {
+            Object object = objects.get(key);
+            Class<?>[] interfaces = object.getClass().getInterfaces();
             for (Class<?> i : interfaces) {
                 if (cls.getName().equals(i.getName()) && i.getAnnotation(Compont.class) != null) {
                     return objects.get(key);
@@ -122,8 +132,8 @@ public class WormApplicationContext {
      * @param cls
      * @return
      */
-    public Object getDefaultImpl(Class<?> cls) {
-        for (String key : keys) {
+    private Object getDefaultObject(Class<?> cls) {
+        for (String key : objects.keySet()) {
             Object object = objects.get(key);
             Class clas = object.getClass();
             Class<?>[] interfaces = clas.getInterfaces();
@@ -136,7 +146,7 @@ public class WormApplicationContext {
         return null;
     }
 
-    public static void main(String[] args) throws InstantiationException, IllegalAccessException {
+    public static void main(String[] args) {
         WormApplicationContext applicationContext = new WormApplicationContext("crawler.anger");
         Worm wormDepth = applicationContext.getBean(WormDepth.class);
         Container container = ResourcesContainer.getInstance();
@@ -144,7 +154,7 @@ public class WormApplicationContext {
         wormDepth.grab();
     }
 
-    public Set<Class<?>> getClasses(String pack) {
+    private Set<Class<?>> getClasses(String pack) {
         // 第一个class类的集合
         Set<Class<?>> classes = new LinkedHashSet<Class<?>>();
         // 是否循环迭代
@@ -239,7 +249,7 @@ public class WormApplicationContext {
      * @param recursive
      * @param classes
      */
-    public static void findAndAddClassesInPackageByFile(String packageName, String packagePath, final boolean recursive, Set<Class<?>> classes) {
+    private static void findAndAddClassesInPackageByFile(String packageName, String packagePath, final boolean recursive, Set<Class<?>> classes) {
         // 获取此包的目录 建立一个File
         File dir = new File(packagePath);
         // 如果不存在或者 也不是目录就直接返回
