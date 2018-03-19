@@ -22,6 +22,11 @@ public class AbstractDefaultResourcesContainer implements Container {
     }
 
     @Override
+    public String next() {
+        return null;
+    }
+
+    @Override
     public int compareTo(Object o) {
         return 0;
     }

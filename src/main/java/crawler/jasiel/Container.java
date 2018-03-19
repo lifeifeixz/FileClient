@@ -32,4 +32,11 @@ public interface Container extends Serializable, Comparable {
      */
     boolean isNext();
 
+    /**
+     * 取出一个链接
+     *
+     * @return
+     */
+    String next();
+
 }

@@ -6,7 +6,8 @@ import java.util.Queue;
 import java.util.Set;
 
 /**
- * 仓库
+ * 仓库;
+ * 仓库是一个单例
  *
  * @author flysLi
  * @date 2017/10/26
@@ -42,13 +43,14 @@ public final class ResourcesContainer implements Container {
 
     @Override
     public synchronized boolean addVisible(String l) {
-        //如果没有收集过，将捕收集
+        /*如果没有收集过，将捕收集*/
         if (!this.visibles.contains(l)) {
             return getInstance().visibles.add(l);
         }
         return false;
     }
 
+    @Override
     public synchronized String next() {
         if (this.links.size() > 0) {
             //取出之前要在links中删除该元素、记录到visibles中

@@ -1,4 +1,4 @@
-package test;
+package test.ch1;
 
 import java.util.AbstractList;
 import java.util.ArrayList;

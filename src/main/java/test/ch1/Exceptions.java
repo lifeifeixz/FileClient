@@ -1,4 +1,4 @@
-package test;
+package test.ch1;
 
 import org.springframework.remoting.RemoteTimeoutException;
 

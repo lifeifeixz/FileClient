@@ -27,13 +27,13 @@ public abstract class MakeProcess {
      * @return
      */
     String generate(String sourcePosition, String productPosition) {
-        // TODO: 2017/12/6 读取源码数据
+        // 2017/12/6 读取源码数据
         String source = FileUtil.readerString(sourcePosition);
-        // TODO: 2017/12/6 解析出生产需要的原材料
+        // 2017/12/6 解析出生产需要的原材料
         Page page = pageMaterial.analysisPage(source);
-        // TODO: 2017/12/6 将材料放进生产线
+        // 2017/12/6 将材料放进生产线
         String product = machine.make(page);
-        // TODO: 2017/12/6 装箱
+        // 2017/12/6 装箱
         ProductDetails productDetail = new ProductDetails();
         productDetail.setContent(product);
         productDetail.setPath(new File(productPosition));
