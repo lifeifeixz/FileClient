@@ -16,6 +16,7 @@ import java.util.List;
  */
 public class MadeTable extends AbstractMadeDefault {
     private static final String TYPE = "-table";
+    private static final int INDEX = 0;
 
     @Override
     public void make(File file) {
@@ -24,13 +25,44 @@ public class MadeTable extends AbstractMadeDefault {
             Document template = this.getTemplateByType("table");
             /*抽取模板*/
             Document product = Jsoup.parse(template.outerHtml());
-            Element operation = product.getElementsByClass("operation").get(0);
+            //产品table
+            Element productTable = product.getElementsByClass("operation").get(0);
+            /*产品form*/
+            Element productForm = product.getElementsByClass("demo-form-inline").get(0);
+            /*查询按钮组件*/
+            Element queryBtn = product.getElementById("queryBtn");
+
+            /*组件模板*/
             Element tdTemplate = template.getElementsByClass("td-template").get(0);
+            /*输入框模板*/
+            Element formInputTemplate = template.getElementsByClass("form-input").get(0);
+            /*下拉框模板*/
+            Element formSelectTemplate = template.getElementsByClass("form-select").get(0);
+            /*时间框模板*/
+            Element formTimeTemplate = template.getElementsByClass("form-time").get(0);
+
+            /*清除产品form中的组件*/
+            product.getElementsByClass("form-input").remove();
+            product.getElementsByClass("form-select").remove();
+            product.getElementsByClass("form-time").remove();
+            /*清空产品table中的td*/
             product.getElementsByClass("td-template").get(0).remove();
             for (Field field : fields) {
-                Element td = tdTemplate.attr("label", field.getName());
-                // TODO: 2018/3/16 因为property字段还没有收到,先待定此功能
-                operation.before(td.outerHtml());
+                /*如果包含'：'表示是form组件；否则是td*/
+                if (field.getName().indexOf("：") > -1) {
+                    Element component = null;
+                    if (field.getName().indexOf("时间") > -1) {
+                        component = formTimeTemplate.attr("label", field.getName());
+                    } else {
+                        component = formInputTemplate.attr("label", field.getName());
+                        component.child(0).attr("placeholder", "请输入" + field.getName());
+                    }
+                    queryBtn.before(component.outerHtml());
+                } else {
+                    Element td = tdTemplate.attr("label", field.getName());
+                    productTable.before(td.outerHtml());
+                    // TODO: 2018/3/16 因为property字段还没有收到,先待定此功能
+                }
             }
             this.out(product.outerHtml());
         } else {

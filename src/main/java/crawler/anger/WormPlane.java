@@ -2,7 +2,6 @@ package crawler.anger;
 
 import crawler.jasiel.Container;
 import crawler.jasiel.ResourcesContainer;
-import jars.ResourceTransportationUtil;
 import org.jsoup.nodes.Document;
 
 /**
@@ -12,10 +11,12 @@ import org.jsoup.nodes.Document;
  * @date 2018/3/19
  */
 public class WormPlane implements Worm {
-
-    private Container resourcesContainer = ResourcesContainer.getInstance();
+    @AutoWired
+    private Container resourcesContainer;
     @AutoWired
     private FollowUpOperation operation;
+    @AutoWired
+    private FetchResource fetchResource;
 
     @Override
     public void grab() {
@@ -23,7 +24,7 @@ public class WormPlane implements Worm {
             String url = resourcesContainer.next();
             Document document;
             try {
-                document = ResourceTransportationUtil.get(url);
+                document = fetchResource.get(url);
                 /*交给后续*/
                 Spoils spoils = new Spoils();
                 spoils.setUrl(url);

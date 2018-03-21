@@ -21,14 +21,23 @@ import java.util.jar.JarFile;
  * @author flysLi
  * @date 2018/3/19
  */
-@SuppressWarnings("All")
-public class WormApplicationContext {
+public class WormApplicationContext implements Application {
 
-    private Map<String, Object> objects = new HashMap<String, Object>(10);
+    /**
+     * bean的容器
+     **/
+    private Map<String, Object> objects = new HashMap<>(10);
 
+    /**
+     * 初始化
+     *
+     * @param packing
+     */
     public WormApplicationContext(String packing) {
-        /*2018/3/19 扫描包下所有的类，装入容器*/
-        Set<Class<?>> classList = this.getClasses(packing);
+        /*扫描包下所有的类，装入容器*/
+        Set<Class<?>> classList = this.getClasses(this.getClass().getPackage().getName());
+        /*将客户端指定的包路径进行扫描并装载*/
+        classList.addAll(this.getClasses(packing));
         /*将所有的非接口类型实例化*/
         for (Class<?> cls : classList) {
             //TODO 2018/3/19 权宜之计：出现莫名其妙的问题，貌似只有这样能解决;
@@ -62,7 +71,7 @@ public class WormApplicationContext {
     }
 
     /**
-     * 将对象注入到某些属性中
+     * 将bean注入到属性中
      *
      * @param object
      */
@@ -74,10 +83,10 @@ public class WormApplicationContext {
                 try {
                     if (this.getCustomInstance(field.getType()) == null) {
                         field.set(object, this.getDefaultObject(field.getType()));
-                        this.log(object + "中的属性" + field.getType().getName() + "已经注入了自定义的实现");
+                        this.log(object + "中的属性" + field.getType().getName() + "已经注入了默认的实现");
                     } else {
                         field.set(object, this.getCustomInstance(field.getType()));
-                        this.log(object + "中的属性" + field.getType().getName() + "已经注入了默认的实现");
+                        this.log(object + "中的属性" + field.getType().getName() + "已经注入了自定义的实现");
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -87,12 +96,13 @@ public class WormApplicationContext {
     }
 
     /**
-     * 获取某个bean
+     * 通过实例类型获取bean
      *
      * @param <T>
      * @param t
      * @return
      */
+    @Override
     public <T> T getBean(Class<T> t) {
         for (String key : objects.keySet()) {
             Object object = objects.get(key);
@@ -103,6 +113,11 @@ public class WormApplicationContext {
         return null;
     }
 
+    /**
+     * log功能
+     *
+     * @param msg
+     */
     private void log(String msg) {
         System.out.println("[" + new Date() + "]INFO:" + msg);
     }
@@ -118,7 +133,7 @@ public class WormApplicationContext {
             Object object = objects.get(key);
             Class<?>[] interfaces = object.getClass().getInterfaces();
             for (Class<?> i : interfaces) {
-                if (cls.getName().equals(i.getName()) && i.getAnnotation(Compont.class) != null) {
+                if (cls.getName().equals(i.getName()) && object.getClass().getAnnotation(Compont.class) != null) {
                     return objects.get(key);
                 }
             }
@@ -127,7 +142,7 @@ public class WormApplicationContext {
     }
 
     /**
-     * 获取默认的实现
+     * 获取框架默认的实现
      *
      * @param cls
      * @return
@@ -154,6 +169,12 @@ public class WormApplicationContext {
         wormDepth.grab();
     }
 
+    /**
+     * 通过包路径扫描收集所有类
+     *
+     * @param pack
+     * @return
+     */
     private Set<Class<?>> getClasses(String pack) {
         // 第一个class类的集合
         Set<Class<?>> classes = new LinkedHashSet<Class<?>>();

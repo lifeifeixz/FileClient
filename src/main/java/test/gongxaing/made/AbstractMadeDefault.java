@@ -6,6 +6,7 @@ import org.jsoup.nodes.Document;
 import test.gongxaing.BaseInfo;
 import test.gongxaing.BeanFactory;
 import test.gongxaing.Field;
+import test.gongxaing.GenerateConfig;
 import test.gongxaing.analysis.Analysis;
 
 import java.io.File;
@@ -41,7 +42,7 @@ public abstract class AbstractMadeDefault implements MadeStrategy {
 
     @Override
     public void out(String dom) {
-        ResourceTransportationUtil.writer(dom, BaseInfo.PRODUCT_BASEPATH + System.currentTimeMillis() + ".html");
+        ResourceTransportationUtil.writer(dom, BaseInfo.PRODUCT_BASEPATH + GenerateConfig.generateConfig.getModularName() + ".html");
     }
 
 

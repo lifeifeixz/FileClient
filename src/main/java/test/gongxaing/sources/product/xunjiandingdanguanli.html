@@ -25,11 +25,17 @@
     </el-form> 
     <el-table :data="tableData" v-loading="listLoading" class="table" empty-text="暂无数据" border fit stripe highlight-current-row style="width: 100%" header-row-class-name="carMgrTable"> 
      <el-table-column type="index" label="序号" class="first" width="50" align="center"></el-table-column>  
-     <el-table-column property="id" align="center" class="td-template" label="省份"></el-table-column>
-     <el-table-column property="id" align="center" class="td-template" label="区/县"></el-table-column>
-     <el-table-column property="id" align="center" class="td-template" label="停车场名称"></el-table-column>
-     <el-table-column property="id" align="center" class="td-template" label="收费标准"></el-table-column>
-     <el-table-column property="id" align="center" class="td-template" label="停车场分类"></el-table-column>
+     <el-table-column property="id" align="center" class="td-template" label="租车订单"></el-table-column>
+     <el-table-column property="id" align="center" class="td-template" label="用户名"></el-table-column>
+     <el-table-column property="id" align="center" class="td-template" label="手机号"></el-table-column>
+     <el-table-column property="id" align="center" class="td-template" label="车牌号"></el-table-column>
+     <el-table-column property="id" align="center" class="td-template" label="巡检上报时间"></el-table-column>
+     <el-table-column property="id" align="center" class="td-template" label="优惠券ID"></el-table-column>
+     <el-table-column property="id" align="center" class="td-template" label="车内清洁度"></el-table-column>
+     <el-table-column property="id" align="center" class="td-template" label="车外清洁度"></el-table-column>
+     <el-table-column property="id" align="center" class="td-template" label="车外划痕"></el-table-column>
+     <el-table-column property="id" align="center" class="td-template" label="车辆损坏"></el-table-column>
+     <el-table-column property="id" align="center" class="td-template" label="车辆违停"></el-table-column>
      <el-table-column align="left" class="operation" width="300" label="操作"> 
       <template slot-scope="scope"> 
        <el-button size="mini" @click="goto({path: './rentCarEdit',query:{id:scope.row.id,type:'info'}})">

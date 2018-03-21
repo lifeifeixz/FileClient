@@ -7,7 +7,7 @@
  *
  * 后续过程仍会增加功能
  */
-package jars;
+package crawler.anger;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -21,7 +21,8 @@ import java.net.URLConnection;
  * @author flysLi
  * @date 2017/10/27
  */
-public class ResourceTransportationUtil {
+@SuppressWarnings("All")
+public class FetchResourceDefault implements FetchResource {
 
     /**
      * 加载远程文件得到DOM格式
@@ -30,9 +31,11 @@ public class ResourceTransportationUtil {
      * @return
      * @throws Exception
      */
-    public static Document get(String uri) throws Exception {
+    @Override
+    public Document get(String uri) throws Exception {
         URL url = new URL(uri);
         HttpURLConnection httpUrl = (HttpURLConnection) url.openConnection();
+        httpUrl.setConnectTimeout(3000);
         InputStream is = httpUrl.getInputStream();
         BufferedReader br = new BufferedReader(new InputStreamReader(is, "utf-8"));
         StringBuilder sb = new StringBuilder();
@@ -206,7 +209,8 @@ public class ResourceTransportationUtil {
      * @param encoding
      * @return
      */
-    public static String getPageSource(String pageUrl, String encoding) {
+    @Override
+    public String getPageSource(String pageUrl, String encoding) {
         StringBuffer sb = new StringBuffer();
         try {
             //构建一URL对象
@@ -229,7 +233,8 @@ public class ResourceTransportationUtil {
     }
 
     public static void main(String[] args) {
-       // System.out.println(FetchResourceDefault.readLocalResource("D:\\L临时数据\\user.sql"));
-        System.out.println(ResourceTransportationUtil.getPageSource("http://www.jingyu.com/?msrc=360xiaoshuo","UTF-8"));
+        FetchResource fetch = new FetchResourceDefault();
+        String dom = fetch.getPageSource("http://www.jingyu.com/?msrc=360xiaoshuo", "UTF-8");
+        System.out.println(dom);
     }
 }

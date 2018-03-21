@@ -2,7 +2,7 @@ package crawler.anger;
 
 import crawler.jasiel.Container;
 import crawler.jasiel.ResourcesContainer;
-import jars.ResourceTransportationUtil;
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -14,18 +14,21 @@ import org.jsoup.select.Elements;
  * @date 2018/3/19
  */
 public class WormDepth implements Worm {
-    private Container resourcesContainer = ResourcesContainer.getInstance();
+    @AutoWired
+    private Container resourcesContainer;
     @AutoWired
     private FollowUpOperation operation;
     @AutoWired
     private QualifiedProduct qualifiedProduct;
+    @AutoWired
+    private FetchResource fetchResource;
 
     @Override
     public void grab() {
         String url = resourcesContainer.next();
         Document document;
         try {
-            document = ResourceTransportationUtil.get(url);
+            document = Jsoup.parse(fetchResource.getPageSource(url, "UTF-8"));
             /*后续处理*/
             Spoils spoils = new Spoils();
             spoils.setUrl(url);
