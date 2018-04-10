@@ -21,6 +21,7 @@ import java.util.jar.JarFile;
  * @author flysLi
  * @date 2018/3/19
  */
+@SuppressWarnings("All")
 public class WormApplicationContext implements Application {
 
     /**

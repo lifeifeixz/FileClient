@@ -5,24 +5,23 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import test.gongxaing.BaseInfo;
 import test.gongxaing.BeanFactory;
-import test.gongxaing.Field;
+import test.gongxaing.model.Field;
 import test.gongxaing.GenerateConfig;
 import test.gongxaing.analysis.Analysis;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Random;
 
 /**
  * @author flysLi
  * @date 2018/3/15
  */
 public abstract class AbstractMadeDefault implements MadeStrategy {
-    String fileName;
     List<Field> fieldList;
     Analysis analysis = BeanFactory.getAnalysisInstance();
     MadeStrategy madeStrategy;
+    File rafaelia;
 
     /**
      * 根据类型读取模板
@@ -44,6 +43,4 @@ public abstract class AbstractMadeDefault implements MadeStrategy {
     public void out(String dom) {
         ResourceTransportationUtil.writer(dom, BaseInfo.PRODUCT_BASEPATH + GenerateConfig.generateConfig.getModularName() + ".html");
     }
-
-
 }

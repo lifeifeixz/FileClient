@@ -3,7 +3,7 @@ package test.gongxaing.made;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import test.gongxaing.Field;
+import test.gongxaing.model.Field;
 
 import java.io.File;
 
@@ -22,8 +22,6 @@ public class MadeDetail extends AbstractMadeDefault {
     private Element detailValue;
     private static final String TYPE = "-detail";
 
-    String type = "-detail";
-
     public MadeDetail() {
         this.initAnalysisTemplate();
     }
@@ -34,11 +32,12 @@ public class MadeDetail extends AbstractMadeDefault {
     }
 
     @Override
-    public void make(File file) {
+    public String make(File file) {
+        Document document;
         if (file.getPath().indexOf(TYPE) != -1) {
             this.fieldList = analysis.analysis(file);
             /*删除原有的item*/
-            Document document = Jsoup.parse(this.dom.outerHtml());
+            document = Jsoup.parse(this.dom.outerHtml());
             Element row = document.getElementsByClass("row").get(0);
             document.getElementsByClass("item").get(0).remove();
             for (Field field : this.fieldList) {
@@ -53,9 +52,9 @@ public class MadeDetail extends AbstractMadeDefault {
             }
             this.out(document.outerHtml());
         } else {
-            this.madeStrategy.make(file);
+            return this.madeStrategy.make(file);
         }
-
+        return document.outerHtml();
     }
 
     /**

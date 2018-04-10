@@ -2,25 +2,25 @@
     <div>
         <el-form :inline="true" :model="queryParams" class="demo-form-inline">
             <el-form-item label="车牌号" class="form-input">
-                <el-input v-model="queryParams.plate" size="small" placeholder="请输入车牌号"></el-input>
+                <el-input size="small" placeholder="请输入车牌号"></el-input>
             </el-form-item>
             <el-form-item label="车辆信息" class="form-select">
-                <el-select v-model="queryParams.complete" size="small" placeholder="全部">
+                <el-select size="small" placeholder="全部">
                     <el-option label="全部" :value="null"></el-option>
                     <el-option label="已完善" :value="true"></el-option>
                     <el-option label="未完善" :value="false"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="巡检上报日期" class="form-time">
-                <el-date-picker v-model="queryParams.startDate"
-                                type="datetime"
-                                size="small"
-                                placeholder="选择日期"
-                                @change="dateChange" style="width: 130px"
-                                format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss">
+                <el-date-picker
+                        type="datetime"
+                        size="small"
+                        placeholder="选择日期"
+                        @change="dateChange"
+                        format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss">
                 </el-date-picker>
-                <el-date-picker v-model="queryParams.endDate" type="datetime" size="small" placeholder="选择日期"
-                                format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" style="width: 130px">
+                <el-date-picker type="datetime" size="small" placeholder="选择日期"
+                                format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss">
                 </el-date-picker>
             </el-form-item>
             <el-form-item id="queryBtn">

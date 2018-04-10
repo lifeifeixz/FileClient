@@ -8,8 +8,9 @@ import java.io.File;
  */
 public class MadeForm extends AbstractMadeDefault {
     @Override
-    public void make(File file) {
+    public String make(File file) {
 
+        return null;
     }
 
     @Override

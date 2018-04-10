@@ -10,7 +10,7 @@ import java.io.*;
  */
 public class App1 {
     public static void main(String[] args) throws Exception {
-        GenerateConfig.generateConfig.setFile(new File("D:\\workspace_student\\FileClient\\src\\main\\java\\test\\gongxaing\\sources\\rawmaterial\\daishenhe-table"));
+        GenerateConfig.generateConfig.setFile(new File("D:\\workspace_student\\FileClient\\src\\main\\java\\test\\gongxaing\\sources\\rawmaterial\\车辆年检详情-detail"));
         File file = new File(GenerateConfig.generateConfig.getFile().getPath());
         /*made*/
         MadeStrategy madeStrategy = BeanFactory.getMadeStrategyInstance();

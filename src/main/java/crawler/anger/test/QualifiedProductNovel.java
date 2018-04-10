@@ -11,9 +11,7 @@ import crawler.anger.QualifiedProduct;
 public class QualifiedProductNovel implements QualifiedProduct {
     @Override
     public boolean verification(String url) {
-        if (url != null && url.trim().length() > 4 && url.indexOf("http") > -1) {
-            return true;
-        }
-        return false;
+        
+        return true;
     }
 }

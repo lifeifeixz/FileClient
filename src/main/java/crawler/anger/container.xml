@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<anger>
+    <!--最多收集到多少条URL-->
+    <container>
+        <max-link-count>10000</max-link-count>
+    </container>
+    <!--资源采集配置-->
+    <thread-count>20</thread-count>
+    <!--利用redis当做存储仓库时需要传入的配置-->
+    <!--
+        考虑到资源的存和取需要非常快的速度，
+        所以这里暂时只考虑使用内存工具作为存储仓库。
+    -->
+    <redis>
+        <url>localhost</url>
+        <port>6380</port>
+        <user-name></user-name>
+        <password></password>
+    </redis>
+</anger>

@@ -1,7 +1,7 @@
 package crawler.anger;
 
 /**
- * 该接口用于验证超链接是否合格
+ * 过滤原则
  *
  * @author flysLi
  * @date 2018/3/19

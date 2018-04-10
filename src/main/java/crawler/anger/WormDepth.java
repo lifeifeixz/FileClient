@@ -1,7 +1,6 @@
 package crawler.anger;
 
 import crawler.jasiel.Container;
-import crawler.jasiel.ResourcesContainer;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -38,7 +37,7 @@ public class WormDepth implements Worm {
             /*收集url。但只收集符合规则的url*/
             Elements links = document.getElementsByTag("a");
             for (Element link : links) {
-                String uri = link.attr("href");
+                String uri = link.attr("abs:href");
                 if (qualifiedProduct.verification(uri)) {
                     resourcesContainer.addLink(uri);
                 }
@@ -46,7 +45,7 @@ public class WormDepth implements Worm {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (!resourcesContainer.isNext()) {
+            if (resourcesContainer.isNext()) {
                 grab();
             }
         }

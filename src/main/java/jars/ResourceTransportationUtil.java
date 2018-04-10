@@ -21,6 +21,7 @@ import java.net.URLConnection;
  * @author flysLi
  * @date 2017/10/27
  */
+@SuppressWarnings("All")
 public class ResourceTransportationUtil {
 
     /**
@@ -228,8 +229,34 @@ public class ResourceTransportationUtil {
         return sb.toString();
     }
 
+    /**
+     * 往文件中追加数据
+     *
+     * @param file
+     * @param data
+     */
+    public static void appendData(File file, String data) {
+        FileWriter fw = null;
+        try {
+            //如果文件存在，则追加内容；如果文件不存在，则创建文件
+            fw = new FileWriter(file, true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        PrintWriter pw = new PrintWriter(fw);
+        pw.println(data);
+        pw.flush();
+        try {
+            fw.flush();
+            pw.close();
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
-       // System.out.println(FetchResourceDefault.readLocalResource("D:\\L临时数据\\user.sql"));
-        System.out.println(ResourceTransportationUtil.getPageSource("http://www.jingyu.com/?msrc=360xiaoshuo","UTF-8"));
+        // System.out.println(FetchResourceDefault.readLocalResource("D:\\L临时数据\\user.sql"));
+        System.out.println(ResourceTransportationUtil.getPageSource("http://www.jingyu.com/?msrc=360xiaoshuo", "UTF-8"));
     }
 }

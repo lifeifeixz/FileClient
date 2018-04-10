@@ -18,7 +18,7 @@ public interface MadeStrategy {
     /**
      * 制作
      */
-    void make(File file);
+    String make(File file);
 
     void setMadeStrategy(MadeStrategy strategy);
 }

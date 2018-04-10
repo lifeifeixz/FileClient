@@ -1,4 +1,4 @@
-package test.gongxaing;
+package test.gongxaing.model;
 
 /**
  * @author flysLi

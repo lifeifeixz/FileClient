@@ -8,8 +8,8 @@ import java.io.File;
  */
 public class MadeDefault extends AbstractMadeDefault {
     @Override
-    public void make(File file) {
-        System.out.println("暂时无人帮您处理该业务");
+    public String make(File file) {
+        return "暂时无人帮您处理该业务";
     }
 
     @Override

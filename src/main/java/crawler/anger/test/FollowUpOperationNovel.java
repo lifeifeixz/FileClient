@@ -12,9 +12,7 @@ import crawler.anger.Spoils;
 public class FollowUpOperationNovel implements FollowUpOperation {
     @Override
     public Object thing(Spoils spoils) {
-        if (spoils.getUrl() != null && spoils.getUrl().indexOf("http://www.jingyu.com/novel") > -1) {
-            System.out.println(spoils.getUrl());
-        }
+        System.out.println(spoils.getDocument().title() + " " + spoils.getUrl());
         return null;
     }
 }

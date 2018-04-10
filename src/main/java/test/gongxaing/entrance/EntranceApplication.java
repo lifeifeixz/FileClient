@@ -1,7 +1,5 @@
 package test.gongxaing.entrance;
 
-import test.gongxaing.BeanFactory;
-import test.gongxaing.made.MadeStrategy;
 
 /**
  * @author flysLi

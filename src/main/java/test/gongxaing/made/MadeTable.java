@@ -3,7 +3,7 @@ package test.gongxaing.made;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import test.gongxaing.Field;
+import test.gongxaing.model.Field;
 
 import java.io.File;
 import java.util.List;
@@ -19,12 +19,13 @@ public class MadeTable extends AbstractMadeDefault {
     private static final int INDEX = 0;
 
     @Override
-    public void make(File file) {
+    public String make(File file) {
+        Document product;
         if (file.getPath().indexOf(TYPE) != -1) {
             List<Field> fields = this.analysis.analysis(file);
             Document template = this.getTemplateByType("table");
             /*抽取模板*/
-            Document product = Jsoup.parse(template.outerHtml());
+            product = Jsoup.parse(template.outerHtml());
             //产品table
             Element productTable = product.getElementsByClass("operation").get(0);
             /*产品form*/
@@ -51,11 +52,11 @@ public class MadeTable extends AbstractMadeDefault {
                 /*如果包含'：'表示是form组件；否则是td*/
                 if (field.getName().indexOf("：") > -1) {
                     Element component = null;
-                    if (field.getName().indexOf("时间") > -1) {
-                        component = formTimeTemplate.attr("label", field.getName());
+                    if (field.getName().indexOf("时间") > -1 || field.getName().indexOf("日期") > -1) {
+                        component = formTimeTemplate.attr("label", field.getName().replaceAll("：", ""));
                     } else {
                         component = formInputTemplate.attr("label", field.getName());
-                        component.child(0).attr("placeholder", "请输入" + field.getName());
+                        component.child(0).attr("placeholder", "请输入" + field.getName().replaceAll("：", ""));
                     }
                     queryBtn.before(component.outerHtml());
                 } else {
@@ -66,8 +67,9 @@ public class MadeTable extends AbstractMadeDefault {
             }
             this.out(product.outerHtml());
         } else {
-            this.madeStrategy.make(file);
+            return this.madeStrategy.make(file);
         }
+        return product.outerHtml();
     }
 
     @Override

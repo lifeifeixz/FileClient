@@ -4,10 +4,34 @@
         <el-button size="small" @click="goto('poolComplainRecord',{})" type="primary">返回上一页</el-button>
     </el-row>
     <!-- 正文 -->
-    <el-row :gutter="20" class="row">
-        <el-col :span="6" class="item">
+    <el-row :gutter="24" class="row">
+        <el-col :span="8" class="item">
             <el-col :span="8" class="detail-lab">投诉ID：</el-col>
             <el-col :span="16" class="detail-value">&nbsp;{{obj.id}}</el-col>
         </el-col>
     </el-row>
 </el-row>
+
+<style>
+
+    .detail-lab, .detail-val {
+        display: block;
+        float: left;
+    }
+
+    .detail-lab {
+        font-weight: 600;
+        text-align: right;
+    }
+
+    .detail-val {
+        width: 70%;
+    }
+
+    .detail-rows {
+        background: #fff;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+</style>

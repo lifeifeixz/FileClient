@@ -59,7 +59,7 @@ public final class ResourceWarehouse implements Container {
 
     @Override
     public boolean isNext() {
-        return this.links.isEmpty();
+        return !this.links.isEmpty();
     }
 
     public static void main(String[] args) {
