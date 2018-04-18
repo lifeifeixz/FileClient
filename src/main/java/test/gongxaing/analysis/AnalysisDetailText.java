@@ -1,6 +1,7 @@
 package test.gongxaing.analysis;
 
 import test.gongxaing.model.Field;
+import test.gongxaing.model.Fields;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class AnalysisDetailText extends AbstractAnalysisDefault {
     protected String type = "-detail";
 
     @Override
-    public List<Field> analysis(File file) {
+    public Fields analysis(File file) {
         /*文件类型是detail*/
         if (this.isContain(file.getPath())) {
             return this.analysisLine(file);
@@ -27,10 +28,10 @@ public class AnalysisDetailText extends AbstractAnalysisDefault {
     }
 
     @Override
-    public List<Field> analysisLine(File file) {
+    public Fields analysisLine(File file) {
         FileInputStream inputStream = null;
         BufferedReader bufferedReader = null;
-        List<Field> fields = new ArrayList<>(10);
+        Fields fields = new Fields();
         try {
             inputStream = new FileInputStream(file);
             bufferedReader = new BufferedReader(new InputStreamReader(inputStream));

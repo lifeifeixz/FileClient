@@ -1,9 +1,8 @@
 package test.gongxaing.analysis;
 
-import test.gongxaing.model.Field;
+import test.gongxaing.model.Fields;
 
 import java.io.File;
-import java.util.List;
 
 /**
  * @author flysLi
@@ -16,5 +15,5 @@ public interface Analysis {
      *
      * @return
      */
-    List<Field> analysis(File file);
+    Fields analysis(File file);
 }

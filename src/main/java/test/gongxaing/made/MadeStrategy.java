@@ -1,5 +1,7 @@
 package test.gongxaing.made;
 
+import test.gongxaing.model.Modular;
+
 import java.io.File;
 
 /**
@@ -18,7 +20,7 @@ public interface MadeStrategy {
     /**
      * 制作
      */
-    String make(File file);
+    String make(Modular modular);
 
     void setMadeStrategy(MadeStrategy strategy);
 }

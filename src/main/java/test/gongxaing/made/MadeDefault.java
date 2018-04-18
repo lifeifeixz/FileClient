@@ -1,6 +1,6 @@
 package test.gongxaing.made;
 
-import java.io.File;
+import test.gongxaing.model.Modular;
 
 /**
  * @author flysLi
@@ -8,7 +8,7 @@ import java.io.File;
  */
 public class MadeDefault extends AbstractMadeDefault {
     @Override
-    public String make(File file) {
+    public String make(Modular modular) {
         return "暂时无人帮您处理该业务";
     }
 

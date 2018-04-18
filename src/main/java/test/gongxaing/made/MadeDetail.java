@@ -4,8 +4,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import test.gongxaing.model.Field;
-
-import java.io.File;
+import test.gongxaing.model.Modular;
 
 /**
  * 详情的拼接方式
@@ -32,10 +31,10 @@ public class MadeDetail extends AbstractMadeDefault {
     }
 
     @Override
-    public String make(File file) {
-        Document document;
-        if (file.getPath().indexOf(TYPE) != -1) {
-            this.fieldList = analysis.analysis(file);
+    public String make(Modular modular) {
+        Document document = null;
+        if (modular.getType().equals(TYPE)) {
+            this.fieldList = modular.getTds();
             /*删除原有的item*/
             document = Jsoup.parse(this.dom.outerHtml());
             Element row = document.getElementsByClass("row").get(0);
@@ -52,7 +51,7 @@ public class MadeDetail extends AbstractMadeDefault {
             }
             this.out(document.outerHtml());
         } else {
-            return this.madeStrategy.make(file);
+            return this.madeStrategy.make(modular);
         }
         return document.outerHtml();
     }

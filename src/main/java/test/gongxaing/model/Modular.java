@@ -12,7 +12,16 @@ public class Modular {
      * 列表显示字段
      **/
     private Fields tds;
+
+    /**
+     * 结果字段
+     **/
     private Querys querys;
+
+    /**
+     * 模块类型
+     **/
+    private String type;
 
     public Fields getTds() {
         return tds;
@@ -28,5 +37,13 @@ public class Modular {
 
     public void setQuerys(Querys querys) {
         this.querys = querys;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

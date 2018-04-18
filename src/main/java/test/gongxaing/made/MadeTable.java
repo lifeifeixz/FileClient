@@ -4,8 +4,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import test.gongxaing.model.Field;
+import test.gongxaing.model.Modular;
 
-import java.io.File;
 import java.util.List;
 
 /**
@@ -19,10 +19,10 @@ public class MadeTable extends AbstractMadeDefault {
     private static final int INDEX = 0;
 
     @Override
-    public String make(File file) {
-        Document product;
-        if (file.getPath().indexOf(TYPE) != -1) {
-            List<Field> fields = this.analysis.analysis(file);
+    public String make(Modular modular) {
+        Document product = null;
+        if (modular.getType().equals(TYPE)) {
+            List<Field> fields = modular.getTds();
             Document template = this.getTemplateByType("table");
             /*抽取模板*/
             product = Jsoup.parse(template.outerHtml());
@@ -67,7 +67,7 @@ public class MadeTable extends AbstractMadeDefault {
             }
             this.out(product.outerHtml());
         } else {
-            return this.madeStrategy.make(file);
+            return this.madeStrategy.make(modular);
         }
         return product.outerHtml();
     }

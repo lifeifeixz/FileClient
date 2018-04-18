@@ -1,6 +1,7 @@
 package test.gongxaing.analysis;
 
 import test.gongxaing.model.Field;
+import test.gongxaing.model.Fields;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -37,17 +38,17 @@ public class AnalysisTableHeader extends AbstractAnalysisDefault {
     }
 
     @Override
-    public List<Field> analysis(File file) {
+    public Fields analysis(File file) {
         if (this.isContain(file.getPath())) {
             return this.analysisLine(file);
         } else {
-            return this.analysis(file);
+            return this.analysis.analysis(file);
         }
     }
 
     @Override
-    public List<Field> analysisLine(File file) {
-        List<Field> names = new ArrayList<>(10);
+    public Fields analysisLine(File file) {
+        Fields names = new Fields();
         //BufferedReader是可以按行读取文件
         FileInputStream inputStream;
         try {

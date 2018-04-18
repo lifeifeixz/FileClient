@@ -1,16 +1,22 @@
 package test.gongxaing.made;
 
-import java.io.File;
+import test.gongxaing.model.Modular;
 
 /**
  * @author flysLi
  * @date 2018/3/21
  */
 public class MadeForm extends AbstractMadeDefault {
-    @Override
-    public String make(File file) {
 
-        return null;
+    private static final String TYPE = "-form";
+
+    @Override
+    public String make(Modular modular) {
+        if (modular.getType().equals(TYPE)) {
+            return null;
+        } else {
+            return this.madeStrategy.make(modular);
+        }
     }
 
     @Override

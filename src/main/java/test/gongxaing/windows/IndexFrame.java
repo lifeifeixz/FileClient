@@ -11,6 +11,8 @@ public class IndexFrame extends Frame {
     public int baseX = 0;
     public FileDialog d1;
     public Label uploadLabel;
+    public TextArea sourceArea;
+    public Choice type;
 
     public IndexFrame(String str) {
         super(str);
@@ -20,41 +22,43 @@ public class IndexFrame extends Frame {
         /*设置窗口居中显示*/
         this.setLayout(null);
         /*设置icon*/
-        setSize(400, 800);
+        setSize(600, 800);
+        setLocationRelativeTo(null);
         setVisible(true);
         setResizable(false);
 
-        /*上传组件*/
-        uploadLabel = new Label("UPLOAD");
+        /*源label*/
+        uploadLabel = new Label("SOURCE");
         uploadLabel.setBounds(baseX + 50, 170, 60, 30);
         add(uploadLabel);
+        /*源输入*/
+        sourceArea = new TextArea();
+        sourceArea.setBounds(baseX + 110, 170, 50, 30);
+        int sourAreaHeight = 100;
+        sourceArea.setSize(300, sourAreaHeight);
+        add(sourceArea);
 
-        /*文件选择按钮*/
-        choiceFileBtn = new Button("upload");
-        choiceFileBtn.setBounds(baseX + 110, 170, 50, 30);
-        choiceFileBtn.addActionListener((e) -> {
-            d1.setVisible(true);
-        });
-        add(choiceFileBtn);
-
+        /*下拉框label*/
+        Label select = new Label("TYPE");
+        select.setBounds(baseX + 50, 200 + sourAreaHeight, 60, 30);
+        add(select);
         //下拉框组件
-        Choice c = new Choice();
-        c.setBounds(baseX + 220, 170, 100, 30);
-        c.add("table");
-        c.add("detail");
-        c.add("form");
-        add(c);
-        add(c);
+        type = new Choice();
+        type.setBounds(baseX + 110, 200 + sourAreaHeight, 150, 30);
+        type.add("-table");
+        type.add("-detail");
+        type.add("-form");
+        add(type);
 
          /*开始按钮*/
         start = new Button("Start");
-        start.setBounds(baseX + 90, 200, 60, 30);
+        start.setBounds(baseX + 90, 280 + sourAreaHeight, 60, 30);
         start.addActionListener(new StartEvent());
         add(start);
 
         /*退出按钮*/
         exitout = new Button("exit");
-        exitout.setBounds(baseX + 250, 200, 60, 30);
+        exitout.setBounds(baseX + 250, 280 + sourAreaHeight, 60, 30);
         exitout.addActionListener(new CloseEvent());
         add(exitout);
 

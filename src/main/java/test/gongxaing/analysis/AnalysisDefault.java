@@ -1,6 +1,7 @@
 package test.gongxaing.analysis;
 
 import test.gongxaing.model.Field;
+import test.gongxaing.model.Fields;
 
 import java.io.File;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
  */
 public class AnalysisDefault extends AbstractAnalysisDefault {
     @Override
-    public List<Field> analysis(File file) {
+    public Fields analysis(File file) {
         return null;
     }
 

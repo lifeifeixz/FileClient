@@ -4,11 +4,10 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import test.gongxaing.model.Field;
+import test.gongxaing.model.Fields;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 解析出字段的key
@@ -20,7 +19,7 @@ public class AnalysisSwaggerResult extends AbstractAnalysisDefault {
     protected String type = "-swaggerResult";
 
     @Override
-    public List<Field> analysis(File file) {
+    public Fields analysis(File file) {
         if (this.isContain(file.getPath())) {
             return this.analysisLine(file);
         } else {
@@ -29,8 +28,8 @@ public class AnalysisSwaggerResult extends AbstractAnalysisDefault {
     }
 
     @Override
-    public List<Field> analysisLine(File file) {
-        List<Field> fields = new ArrayList<>(10);
+    public Fields analysisLine(File file) {
+        Fields fields = new Fields();
         try {
             Document document = Jsoup.parse(file, "UTF-8");
             String className = "description";
