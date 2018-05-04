@@ -1,10 +1,5 @@
 package test.ch1;
 
-import org.apache.commons.collections.map.HashedMap;
-import org.utils.HttpUtil;
-
-import java.util.Map;
-
 /**
  * Created by flysLi on 2017/9/12.
  */

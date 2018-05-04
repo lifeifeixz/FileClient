@@ -1,7 +1,6 @@
 package test.ch1;
 
 import java.util.AbstractList;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Spliterator;
 import java.util.function.Consumer;

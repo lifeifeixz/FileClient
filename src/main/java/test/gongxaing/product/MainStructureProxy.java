@@ -1,8 +1,8 @@
 package test.gongxaing.product;
 
-import test.gongxaing.BeanFactory;
 import test.gongxaing.analysis.Analysis;
 import test.gongxaing.made.MadeStrategy;
+import test.gongxaing.BeanFactory;
 import test.gongxaing.model.Modular;
 
 /**

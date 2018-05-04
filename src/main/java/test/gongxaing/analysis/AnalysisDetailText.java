@@ -4,8 +4,6 @@ import test.gongxaing.model.Field;
 import test.gongxaing.model.Fields;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 解析详情(表单)的责任者

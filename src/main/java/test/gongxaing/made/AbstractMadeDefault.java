@@ -1,13 +1,13 @@
 package test.gongxaing.made;
 
+import test.gongxaing.BaseInfo;
+import test.gongxaing.GenerateConfig;
+import test.gongxaing.analysis.Analysis;
+import test.gongxaing.model.Field;
 import jars.ResourceTransportationUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import test.gongxaing.BaseInfo;
 import test.gongxaing.BeanFactory;
-import test.gongxaing.model.Field;
-import test.gongxaing.GenerateConfig;
-import test.gongxaing.analysis.Analysis;
 
 import java.io.File;
 import java.io.IOException;

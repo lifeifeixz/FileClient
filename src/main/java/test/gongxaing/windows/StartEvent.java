@@ -1,15 +1,14 @@
 package test.gongxaing.windows;
 
-import jars.ResourceTransportationUtil;
 import test.gongxaing.BaseInfo;
-import test.gongxaing.BeanFactory;
-import test.gongxaing.GenerateConfig;
-import test.gongxaing.analysis.Analysis;
 import test.gongxaing.made.MadeStrategy;
 import test.gongxaing.model.Field;
 import test.gongxaing.model.Fields;
+import jars.ResourceTransportationUtil;
+import test.gongxaing.BeanFactory;
 import test.gongxaing.model.Modular;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,6 +29,9 @@ public class StartEvent implements ActionListener {
 
         //1.得到输入的source(使用客户端传入的source暂时使用新的解析器TextAreaAnalysis)
         String source = indexFrame.sourceArea.getText();
+        if (source == null || source.trim().length() == 0) {
+            JOptionPane.showMessageDialog(new Label("确定"), "请输入源数据");
+        }
         String[] tds = source.split("\n");
         //2.得到type
         String type = indexFrame.type.getSelectedItem();

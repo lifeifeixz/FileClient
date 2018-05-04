@@ -1,7 +1,7 @@
 package test.gongxaing.analysis;
 
-import test.gongxaing.model.Field;
 import test.gongxaing.model.Fields;
+import test.gongxaing.model.Field;
 
 import java.io.File;
 import java.util.List;

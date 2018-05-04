@@ -51,7 +51,7 @@ public class IndexFrame extends Frame {
         add(type);
 
          /*开始按钮*/
-        start = new Button("Start");
+        start = new Button("made");
         start.setBounds(baseX + 90, 280 + sourAreaHeight, 60, 30);
         start.addActionListener(new StartEvent());
         add(start);
@@ -67,7 +67,7 @@ public class IndexFrame extends Frame {
     }
 
     public static void main(String[] args) {
-        IndexFrame indexFrame = new IndexFrame("登录窗口");
+        IndexFrame indexFrame = new IndexFrame("生成工具");
         indexFrame.init();
     }
 }

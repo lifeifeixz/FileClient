@@ -1,6 +1,5 @@
 package test.gongxaing.made;
 
-import test.gongxaing.analysis.AbstractAnalysisDefault;
 import test.gongxaing.analysis.Analysis;
 
 /**
